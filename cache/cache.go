@@ -16,12 +16,40 @@ func NewCache(max_size int) ICache {
 }
 
 type ICache interface {
+	// Len возвращает количество элементов в кэше
 	Len() int
+
+	// Cap возвращает максимальный размер кэша
 	Cap() int
+	// Add добавляет элемент в кэш
+	// Если кэш переполнен, удаляет самый старый элемент
+	//
+	// key - ключ элемента
+	// value - значение элемента
 	Add(key, value interface{})
+
+	// AddWithTTL добавляет элемент в кэш и задает время жизни элемента
+	//
+	// key - ключ элемента
+	// value - значение элемента
+	// ttl - время жизни элемента
 	AddWithTTL(key, value interface{}, ttl time.Duration)
+
+	// Clear очищает кэш
 	Clear()
+
+	// Get возвращает значение элемента из кэша
+	//
+	// key - ключ элемента
+	//
+	// Если элемента нет в кэше, возвращает ok = false
 	Get(key interface{}) (interface{}, bool)
+
+	// Remove удаляет элемент из кэша
+	//
+	// key - ключ элемента
+	//
+	// Если элемента нет в кэше, возвращает ok = false
 	Remove(key interface{}) bool
 }
 
